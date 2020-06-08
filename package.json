@@ -1,0 +1,23 @@
+{
+  "name": "innopizza",
+  "version": "1.0.0",
+  "description": "Web application for online pizza ordering",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angkhaustova/innopizza.git"
+  },
+  "author": {
+    "name": "Angelica Khaustova",
+    "email": "angelicakhaustova@gmail.com",
+    "url": "https://github.com/angkhaustova/"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angkhaustova/innopizza/issues"
+  },
+  "homepage": "https://github.com/angkhaustova/innopizza#readme"
+}
