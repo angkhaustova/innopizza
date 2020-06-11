@@ -16,6 +16,9 @@ app.all("/", function (req, res, next) {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Static files
+app.use(express.static("client/public"));
+
 // Routes
 app.use(routes);
 
