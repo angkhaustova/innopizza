@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Static files
-app.use(express.static("client/public"));
+app.use(express.static("client/build"));
 
 // Routes
 app.use(routes);
