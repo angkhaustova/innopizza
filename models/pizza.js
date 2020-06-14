@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Pizza = sequelize.define(
     "Pizza",
     {
-      id: { type: DataTypes.INTEGER, primaryKey: true },
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
       title: DataTypes.STRING,
       description: DataTypes.TEXT,
       code: DataTypes.STRING,
