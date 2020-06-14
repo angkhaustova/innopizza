@@ -5,7 +5,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Button,
 } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useTheme } from "@material-ui/core/styles";

@@ -2,22 +2,16 @@ import React from "react";
 import {
   makeStyles,
   Typography,
-  Grid,
   Drawer,
   IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemAvatar,
-  ListItemText,
-  Avatar,
+  Divider,
+  Container,
 } from "@material-ui/core";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Cart from "./Cart";
+import OrderForm from "./OrderForm";
 
 const useStyles = makeStyles(theme => ({
   order: {
@@ -47,6 +41,10 @@ const useStyles = makeStyles(theme => ({
     right: theme.spacing(4),
     top: theme.spacing(1),
   },
+  divider: {
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
 }));
 
 export default function Order(props) {
@@ -57,7 +55,7 @@ export default function Order(props) {
     setDrawerIsOpen,
     addCartItem,
     removeCartItem,
-    deliveryCost
+    deliveryCost,
   } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -89,13 +87,17 @@ export default function Order(props) {
           </IconButton>
         ) : null}
       </header>
-      <Cart
-        items={items}
-        pizzas={pizzas}
-        addCartItem={addCartItem}
-        removeCartItem={removeCartItem}
-        deliveryCost={deliveryCost}
-      ></Cart>
+      <Container maxWidth="xs">
+        <Cart
+          items={items}
+          pizzas={pizzas}
+          addCartItem={addCartItem}
+          removeCartItem={removeCartItem}
+          deliveryCost={deliveryCost}
+        ></Cart>
+        <Divider className={classes.divider} />
+        <OrderForm items={items}></OrderForm>
+      </Container>
     </Drawer>
   );
 

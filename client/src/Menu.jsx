@@ -5,15 +5,12 @@ import {
   GridListTile,
   makeStyles,
   Typography,
-  CssBaseline,
-  Card,
   CardContent,
   IconButton,
+  Card,
   CardHeader,
   CardMedia,
-  Avatar,
-  Grid,
-  Paper,
+
 } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useTheme } from "@material-ui/core/styles";
@@ -44,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Menu(props) {
-  const { pizzas, setCartItems, addCartItem } = props;
+  const { pizzas, addCartItem } = props;
   const classes = useStyles();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));

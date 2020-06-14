@@ -9,13 +9,10 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
-  Container,
   Divider,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles(theme => ({
   cart: {
@@ -41,15 +38,14 @@ const useStyles = makeStyles(theme => ({
     top: theme.spacing(4),
   },
   divider: {
-    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3),
   },
 }));
 
 export default function Order(props) {
   const { items, pizzas, addCartItem, removeCartItem, deliveryCost } = props;
   const classes = useStyles();
-  const theme = useTheme();
-  // const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const totalCost = (
     Array.from(items).reduce((total, [id, quantity]) => {
       const pizza = pizzas.filter(pizza => pizza.id === id)[0];
@@ -58,7 +54,7 @@ export default function Order(props) {
   ).toFixed(2);
 
   return items.size ? (
-    <Container maxWidth="xs">
+    <React.Fragment>
       <List dense className={classes.root}>
         {Array.from(items).map(([itemId, quantity]) => {
           const pizza = pizzas.filter(pizza => pizza.id === itemId)[0];
@@ -98,7 +94,7 @@ export default function Order(props) {
       <Typography align="center" className={classes.total}>
         Total is ${totalCost}
       </Typography>
-    </Container>
+    </React.Fragment>
   ) : (
     <Typography variant="subtitle1" align="center" color="textSecondary">
       Nothing here yet
