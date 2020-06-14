@@ -14,7 +14,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 const useStyles = makeStyles(theme => {
   return {
     header: {
-      [theme.breakpoints.up("sm")]: { padding: theme.spacing(4) },
+      [theme.breakpoints.up("md")]: { padding: theme.spacing(4) },
       backgroundColor: theme.palette.background.default,
     },
     title: {
@@ -33,7 +33,7 @@ export default function Header(props) {
   const { setDrawerIsOpen } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [scrollPosition, setSrollPosition] = useState(0);
   const handleScroll = () => setSrollPosition(window.pageYOffset);
 

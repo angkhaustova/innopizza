@@ -44,19 +44,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Menu(props) {
-  const { pizzas, setCartItems } = props;
+  const { pizzas, setCartItems, addCartItem } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const betweenSmMd = useMediaQuery(theme.breakpoints.between("xs", "sm"));
-  const isMd = useMediaQuery(theme.breakpoints.only("md"));
+  const isXs = useMediaQuery(theme.breakpoints.only("xs"));
+  const upLg = useMediaQuery(theme.breakpoints.up("lg"));
 
   return (
     <Container maxWidth="md">
-      <GridList
-        spacing={8}
-        cellHeight="auto"
-        cols={betweenSmMd ? 1 : isMd ? 2 : 3}
-      >
+      <GridList spacing={8} cellHeight="auto" cols={isXs ? 1 : upLg ? 3 : 2}>
         {pizzas.map(pizza => (
           <GridListTile
             key={pizza.id}
@@ -68,12 +64,7 @@ export default function Menu(props) {
                 title={pizza.title}
                 subheader={`$${pizza.price}`}
                 action={
-                  <IconButton
-                    aria-label="settings"
-                    onClick={() =>
-                      setCartItems(prevCart => prevCart.concat(pizza.id))
-                    }
-                  >
+                  <IconButton onClick={() => addCartItem(pizza.id)}>
                     <AddShoppingCartIcon />
                   </IconButton>
                 }

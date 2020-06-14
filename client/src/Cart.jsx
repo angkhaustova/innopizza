@@ -2,11 +2,18 @@ import React from "react";
 import {
   makeStyles,
   Typography,
-  Grid,
-  Drawer,
   IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
+  Container,
+  Divider,
 } from "@material-ui/core";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -33,56 +40,68 @@ const useStyles = makeStyles(theme => ({
     left: theme.spacing(2),
     top: theme.spacing(4),
   },
+  divider: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
-export default function Cart(props) {
-  const { items, setItems, pizzas, drawerIsOpen, setDrawerIsOpen } = props;
+export default function Order(props) {
+  const { items, pizzas, addCartItem, removeCartItem, deliveryCost } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
+  // const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
+  const totalCost = (
+    Array.from(items).reduce((total, [id, quantity]) => {
+      const pizza = pizzas.filter(pizza => pizza.id === id)[0];
+      return total + pizza.price * quantity;
+    }, 0) + deliveryCost
+  ).toFixed(2);
 
-  const drawer = (
-    <Drawer
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-      anchor="right"
-      variant={isSmallScreen ? "temporary" : "permanent"}
-      PaperProps={{ className: classes.drawer }}
-      className={classes.drawer}
-      open={drawerIsOpen}
-    >
-      <header className={classes.header}>
-        <Typography
-          variant="h5"
-          component="h2"
-          align="center"
-          className={classes.title}
-        >
-          Order
-        </Typography>
-        {isSmallScreen ? (
-          <IconButton
-            onClick={() => setDrawerIsOpen(false)}
-            className={classes.closeButton}
-          >
-            <ChevronRightIcon />
-          </IconButton>
-        ) : null}
-      </header>
-      {items.map(itemId => {
-        const addedPizzas = pizzas.filter(pizza => pizza.id === itemId);
-        const quantity = addedPizzas.length;
-        return `${addedPizzas[0].title} ${quantity}`;
-      })}
-    </Drawer>
-  );
+  return items.size ? (
+    <Container maxWidth="xs">
+      <List dense className={classes.root}>
+        {Array.from(items).map(([itemId, quantity]) => {
+          const pizza = pizzas.filter(pizza => pizza.id === itemId)[0];
 
-  return isSmallScreen ? (
-    drawer
+          return (
+            <ListItem key={itemId}>
+              <ListItemAvatar>
+                <Avatar
+                  alt={pizza.title}
+                  src={`/images/pizzas/${pizza.code}.jpg`}
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={`${pizza.title} Pizza`}
+                secondary={`$${pizza.price * quantity}`}
+              />
+              <ListItemSecondaryAction>
+                <IconButton onClick={() => removeCartItem(itemId)}>
+                  <RemoveIcon fontSize={"small"} />
+                </IconButton>
+                {quantity}
+                <IconButton onClick={() => addCartItem(itemId)}>
+                  <AddIcon fontSize={"small"} />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
+        })}
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>D</Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={`Delivery`} secondary={`$${deliveryCost}`} />
+        </ListItem>
+      </List>
+      <Divider className={classes.divider} />
+      <Typography align="center" className={classes.total}>
+        Total is ${totalCost}
+      </Typography>
+    </Container>
   ) : (
-    <Grid item sm={4} lg={3} className={classes.cart}>
-      {drawer}
-    </Grid>
+    <Typography variant="subtitle1" align="center" color="textSecondary">
+      Nothing here yet
+    </Typography>
   );
 }
