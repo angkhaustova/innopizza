@@ -1,5 +1,10 @@
 import React from "react";
-import { CssBaseline, Grid, makeStyles } from "@material-ui/core";
+import {
+  CssBaseline,
+  Grid,
+  makeStyles,
+  LinearProgress,
+} from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Menu from "../Menu";
@@ -10,6 +15,11 @@ const useStyles = makeStyles(theme => ({
   menu: {
     backgroundColor: theme.palette.background.default,
     minHeight: "100vh",
+  },
+  loader: {
+    position: "absolute",
+    top: 0,
+    width: "100%",
   },
 }));
 
@@ -48,10 +58,12 @@ export default function App(props) {
 
   return (
     <CssBaseline>
+      {!pizzas.length ? <LinearProgress className={classes.loader} /> : null}
       <Grid container spacing={0}>
         <Grid item xs={12} md={8} lg={9} className={classes.menu}>
-          <Header setDrawerIsOpen={setDrawerIsOpen} />
+          <Header setDrawerIsOpen={setDrawerIsOpen} items={cartItems} />
           <Menu
+            items={cartItems}
             pizzas={pizzas}
             setCartItems={setCartItems}
             addCartItem={addCartItem}

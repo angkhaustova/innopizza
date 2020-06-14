@@ -10,7 +10,7 @@ import {
   Card,
   CardHeader,
   CardMedia,
-
+  Badge,
 } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useTheme } from "@material-ui/core/styles";
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Menu(props) {
-  const { pizzas, addCartItem } = props;
+  const { pizzas, addCartItem, items } = props;
   const classes = useStyles();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
@@ -62,7 +62,9 @@ export default function Menu(props) {
                 subheader={`$${pizza.price}`}
                 action={
                   <IconButton onClick={() => addCartItem(pizza.id)}>
-                    <AddShoppingCartIcon />
+                    <Badge badgeContent={items.get(pizza.id)} color="secondary">
+                      <AddShoppingCartIcon />
+                    </Badge>
                   </IconButton>
                 }
               />

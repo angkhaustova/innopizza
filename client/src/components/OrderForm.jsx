@@ -1,5 +1,10 @@
 import React from "react";
-import { TextField, Button, makeStyles } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  makeStyles,
+  CircularProgress,
+} from "@material-ui/core";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -14,7 +19,20 @@ const useStyles = makeStyles(theme => ({
       marginBottom: 0,
     },
   },
-  button: {},
+  button: {
+    width: "100%",
+  },
+  wrapper: {
+    position: "relative",
+  },
+  buttonProgress: {
+    color: theme.palette.secondary,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
+  },
 }));
 
 export default function OrderForm(props) {
@@ -117,16 +135,21 @@ export default function OrderForm(props) {
         onBlur={formik.handleBlur}
         value={formik.values.email}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        disabled={!items.size || !formik.isValid}
-        align="center"
-        className={classes.field}
-        type="submit"
-      >
-        Get pizza
-      </Button>
+      <div className={[classes.wrapper, classes.field].join(" ")}>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={!items.size || !formik.isValid || formik.isSubmitting}
+          align="center"
+          type="submit"
+          className={classes.button}
+        >
+          Get pizza
+        </Button>
+        {formik.isSubmitting && (
+          <CircularProgress size={24} className={classes.buttonProgress} />
+        )}
+      </div>
     </form>
   );
 }

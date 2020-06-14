@@ -4,6 +4,7 @@ import {
   Typography,
   AppBar,
   Toolbar,
+  Badge,
   IconButton,
 } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => {
 });
 
 export default function Header(props) {
-  const { setDrawerIsOpen } = props;
+  const { setDrawerIsOpen, items } = props;
   const classes = useStyles();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -65,7 +66,15 @@ export default function Header(props) {
             onClick={() => setDrawerIsOpen(true)}
             className={classes.button}
           >
-            <ShoppingCartIcon />
+            <Badge
+              badgeContent={Array.from(items).reduce(
+                (total, [_, quantity]) => total + quantity,
+                0
+              )}
+              color="primary"
+            >
+              <ShoppingCartIcon />
+            </Badge>
           </IconButton>
         )}
       </Toolbar>
