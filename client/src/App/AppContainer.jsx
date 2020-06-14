@@ -5,6 +5,7 @@ export default function AppContainer() {
   const [cartItems, setCartItems] = useState(new Map());
   const [pizzas, setPizzas] = useState([]);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const [orderId, setOrderId] = useState();
 
   const deliveryCost = 5.0;
 
@@ -46,6 +47,8 @@ export default function AppContainer() {
       addCartItem={addCartItem}
       removeCartItem={removeCartItem}
       deliveryCost={deliveryCost}
+      orderId={orderId}
+      setOrderId={setOrderId}
     />
   );
 }

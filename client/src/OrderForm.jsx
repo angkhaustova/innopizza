@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function OrderForm(props) {
-  const { items } = props;
+  const { items, setOrderId, setCartItems } = props;
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -44,7 +44,20 @@ export default function OrderForm(props) {
       email: yup.string().email("Invalid email address").required("Required"),
     }),
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
+      values.items = Array.from(items);
+      fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+        .then(response => response.json())
+        .then(data => {
+          setOrderId(data.id);
+          setCartItems(new Map());
+        })
+        .catch(error => console.error(error));
     },
   });
 

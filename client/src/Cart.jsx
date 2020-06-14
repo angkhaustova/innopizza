@@ -87,13 +87,14 @@ export default function Order(props) {
           <ListItemAvatar>
             <Avatar>D</Avatar>
           </ListItemAvatar>
-          <ListItemText primary={`Delivery`} secondary={`$${deliveryCost}`} />
+          <ListItemText
+            primary={`Delivery (fixed)`}
+            secondary={`$${deliveryCost}`}
+          />
         </ListItem>
       </List>
       <Divider className={classes.divider} />
-      <Typography align="center" className={classes.total}>
-        Total is ${totalCost}
-      </Typography>
+      <Typography align="center">Total is ${totalCost}</Typography>
     </React.Fragment>
   ) : (
     <Typography variant="subtitle1" align="center" color="textSecondary">

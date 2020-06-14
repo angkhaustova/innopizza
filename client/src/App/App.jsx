@@ -23,6 +23,8 @@ export default function App(props) {
     addCartItem,
     removeCartItem,
     deliveryCost,
+    setOrderId,
+    orderId,
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -37,7 +39,10 @@ export default function App(props) {
       setDrawerIsOpen={setDrawerIsOpen}
       addCartItem={addCartItem}
       removeCartItem={removeCartItem}
+      setCartItems={setCartItems}
       deliveryCost={deliveryCost}
+      setOrderId={setOrderId}
+      orderId={orderId}
     ></Order>
   );
 
