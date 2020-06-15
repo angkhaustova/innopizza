@@ -3,7 +3,7 @@ import App from "./App";
 
 export default function AppContainer() {
   const [cartItems, setCartItems] = useState(new Map());
-  const [pizzas, setPizzas] = useState([]);
+  const [pizzas, setPizzas] = useState(new Map());
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   const [orderId, setOrderId] = useState();
 
@@ -28,6 +28,12 @@ export default function AppContainer() {
       return new Map(prevCart);
     });
 
+  const handlePizzaLoad = id =>
+    setPizzas(
+      prevPizzas =>
+        new Map(prevPizzas.set(id, { ...prevPizzas.get(id), loading: false }))
+    );
+
   useEffect(() => {
     (async () => {
       const result = await fetch("/api/pizzas");
@@ -40,6 +46,7 @@ export default function AppContainer() {
             shortDescription: `${
               pizza.description.match(/^.{0,140}\w(?=\s)/gi)[0]
             }...`,
+            loading: true,
           },
         ];
       });
@@ -61,6 +68,7 @@ export default function AppContainer() {
       deliveryCost={deliveryCost}
       orderId={orderId}
       setOrderId={setOrderId}
+      handlePizzaLoad={handlePizzaLoad}
     />
   );
 }

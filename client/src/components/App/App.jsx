@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     minHeight: "100vh",
   },
   loader: {
-    position: "absolute",
+    position: "sticky",
     top: 0,
     width: "100%",
   },
@@ -35,6 +35,7 @@ export default function App(props) {
     deliveryCost,
     setOrderId,
     orderId,
+    handlePizzaLoad,
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -53,6 +54,7 @@ export default function App(props) {
       deliveryCost={deliveryCost}
       setOrderId={setOrderId}
       orderId={orderId}
+      handlePizzaLoad={handlePizzaLoad}
     ></Order>
   );
 
@@ -67,6 +69,7 @@ export default function App(props) {
             pizzas={pizzas}
             setCartItems={setCartItems}
             addCartItem={addCartItem}
+            handlePizzaLoad={handlePizzaLoad}
           ></Menu>
         </Grid>
         {isSmallScreen ? (
