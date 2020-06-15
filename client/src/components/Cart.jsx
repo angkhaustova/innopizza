@@ -48,7 +48,7 @@ export default function Order(props) {
   const classes = useStyles();
   const totalCost = (
     Array.from(items).reduce((total, [id, quantity]) => {
-      const pizza = pizzas.filter(pizza => pizza.id === id)[0];
+      const pizza = pizzas.get(id);
       return total + pizza.price * quantity;
     }, 0) + deliveryCost
   ).toFixed(2);
@@ -57,7 +57,7 @@ export default function Order(props) {
     <React.Fragment>
       <List dense className={classes.root}>
         {Array.from(items).map(([itemId, quantity]) => {
-          const pizza = pizzas.filter(pizza => pizza.id === itemId)[0];
+          const pizza = pizzas.get(itemId);
 
           return (
             <ListItem key={itemId}>
@@ -69,7 +69,7 @@ export default function Order(props) {
               </ListItemAvatar>
               <ListItemText
                 primary={`${pizza.title} Pizza`}
-                secondary={`$${pizza.price * quantity}`}
+                secondary={`$${(pizza.price * quantity).toFixed(2)}`}
               />
               <ListItemSecondaryAction>
                 <IconButton onClick={() => removeCartItem(itemId)}>

@@ -31,8 +31,20 @@ export default function AppContainer() {
   useEffect(() => {
     (async () => {
       const result = await fetch("/api/pizzas");
+      const json = await result.json();
+      const mapped = json.map(pizza => {
+        return [
+          pizza.id,
+          {
+            ...pizza,
+            shortDescription: `${
+              pizza.description.match(/^.{0,140}\w(?=\s)/gi)[0]
+            }...`,
+          },
+        ];
+      });
 
-      setPizzas(await result.json());
+      setPizzas(new Map(mapped));
     })();
   }, []);
 

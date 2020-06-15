@@ -58,7 +58,7 @@ export default function App(props) {
 
   return (
     <CssBaseline>
-      {!pizzas.length ? <LinearProgress className={classes.loader} /> : null}
+      {!pizzas.size ? <LinearProgress className={classes.loader} /> : null}
       <Grid container spacing={0}>
         <Grid item xs={12} md={8} lg={9} className={classes.menu}>
           <Header setDrawerIsOpen={setDrawerIsOpen} items={cartItems} />

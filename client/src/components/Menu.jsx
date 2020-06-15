@@ -50,7 +50,7 @@ export default function Menu(props) {
   return (
     <Container maxWidth="md">
       <GridList spacing={8} cellHeight="auto" cols={isXs ? 1 : upLg ? 3 : 2}>
-        {pizzas.map(pizza => (
+        {Array.from(pizzas.values()).map(pizza => (
           <GridListTile
             key={pizza.id}
             classes={{ tile: classes.tile }}
@@ -59,7 +59,7 @@ export default function Menu(props) {
             <Card className={classes.card} elevation={1}>
               <CardHeader
                 title={pizza.title}
-                subheader={`$${pizza.price}`}
+                subheader={`$${pizza.price.toFixed(2)}`}
                 action={
                   <IconButton onClick={() => addCartItem(pizza.id)}>
                     <Badge badgeContent={items.get(pizza.id)} color="secondary">
@@ -75,7 +75,7 @@ export default function Menu(props) {
               />
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {`${pizza.description.match(/^.{122,}?\./gi)[0]}..`}
+                  {pizza.shortDescription}
                 </Typography>
               </CardContent>
             </Card>
