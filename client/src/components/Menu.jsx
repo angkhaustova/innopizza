@@ -12,6 +12,7 @@ import {
   CardMedia,
   Badge,
 } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Menu(props) {
-  const { pizzas, addCartItem, items } = props;
+  const { pizzas, addCartItem, items, handlePizzaLoad } = props;
   const classes = useStyles();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
@@ -68,11 +69,28 @@ export default function Menu(props) {
                   </IconButton>
                 }
               />
-              <CardMedia
-                className={classes.media}
-                image={`/images/pizzas/${pizza.code}.jpg`}
-                title={`${pizza.title} Pizza`}
-              />
+              {pizza.loading ? (
+                <Skeleton
+                  animation="wave"
+                  height="206px"
+                  width="100%"
+                  variant="rect"
+                />
+              ) : (
+                <CardMedia
+                  className={classes.media}
+                  image={`/images/pizzas/${pizza.code}.jpg`}
+                  title={`${pizza.title} Pizza`}
+                />
+              )}
+              {pizza.loading ? (
+                <img
+                  alt={`${pizza.title} Pizza`}
+                  style={{ display: "none" }}
+                  src={`/images/pizzas/${pizza.code}.jpg`}
+                  onLoad={() => handlePizzaLoad(pizza.id)}
+                ></img>
+              ) : null}
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {pizza.shortDescription}
