@@ -44,14 +44,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Order(props) {
-  const { items, pizzas, addCartItem, removeCartItem, deliveryCost } = props;
+  const {
+    items,
+    pizzas,
+    addCartItem,
+    removeCartItem,
+    deliveryCost,
+    exchangeRate,
+  } = props;
   const classes = useStyles();
-  const totalCost = (
+  const totalCostUSD = (
     Array.from(items).reduce((total, [id, quantity]) => {
       const pizza = pizzas.get(id);
-      return total + pizza.price * quantity;
+      return total + pizza.priceUSD * quantity;
     }, 0) + deliveryCost
   ).toFixed(2);
+  const totalCostEUR = (totalCostUSD * exchangeRate).toFixed(2);
 
   return items.size ? (
     <React.Fragment>
@@ -69,7 +77,11 @@ export default function Order(props) {
               </ListItemAvatar>
               <ListItemText
                 primary={`${pizza.title} Pizza`}
-                secondary={`$${(pizza.price * quantity).toFixed(2)}`}
+                secondary={`$${(pizza.priceUSD * quantity).toFixed(2)} / €${(
+                  pizza.priceUSD *
+                  quantity *
+                  exchangeRate
+                ).toFixed(2)}`}
               />
               <ListItemSecondaryAction>
                 <IconButton onClick={() => removeCartItem(itemId)}>
@@ -89,12 +101,16 @@ export default function Order(props) {
           </ListItemAvatar>
           <ListItemText
             primary={`Delivery (fixed)`}
-            secondary={`$${deliveryCost}`}
+            secondary={`$${deliveryCost} / €${(
+              deliveryCost * exchangeRate
+            ).toFixed(2)}`}
           />
         </ListItem>
       </List>
       <Divider className={classes.divider} />
-      <Typography align="center">Total is ${totalCost}</Typography>
+      <Typography align="center">
+        Total is ${totalCostUSD} / €{totalCostEUR}
+      </Typography>
     </React.Fragment>
   ) : (
     <Typography variant="subtitle1" align="center" color="textSecondary">

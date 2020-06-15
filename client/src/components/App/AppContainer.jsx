@@ -8,6 +8,7 @@ export default function AppContainer() {
   const [orderId, setOrderId] = useState();
 
   const deliveryCost = 5.0;
+  const exchangeRate = 0.89;
 
   const addCartItem = id =>
     setCartItems(
@@ -46,6 +47,8 @@ export default function AppContainer() {
             shortDescription: `${
               pizza.description.match(/^.{0,140}\w(?=\s)/gi)[0]
             }...`,
+            priceUSD: pizza.price,
+            priceEUR: pizza.price * exchangeRate,
             loading: true,
           },
         ];
@@ -69,6 +72,7 @@ export default function AppContainer() {
       orderId={orderId}
       setOrderId={setOrderId}
       handlePizzaLoad={handlePizzaLoad}
+      exchangeRate={exchangeRate}
     />
   );
 }

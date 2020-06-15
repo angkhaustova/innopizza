@@ -59,6 +59,7 @@ export default function Order(props) {
     deliveryCost,
     setOrderId,
     orderId,
+    exchangeRate,
   } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -97,12 +98,15 @@ export default function Order(props) {
           addCartItem={addCartItem}
           removeCartItem={removeCartItem}
           deliveryCost={deliveryCost}
+          exchangeRate={exchangeRate}
         ></Cart>
         <Divider className={classes.divider} />
         {orderId && (
-          <Typography align="center" className={classes.total}>Thank you! Your order is №{orderId}.</Typography>
+          <Typography align="center" className={classes.total}>
+            Thank you! Your order is №{orderId}.
+          </Typography>
         )}
-        {(!orderId || items.size) ? (
+        {!orderId || items.size ? (
           <OrderForm
             items={items}
             setOrderId={setOrderId}

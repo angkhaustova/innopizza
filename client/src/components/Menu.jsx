@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Menu(props) {
-  const { pizzas, addCartItem, items, handlePizzaLoad } = props;
+  const { pizzas, addCartItem, items, handlePizzaLoad, exchangeRate } = props;
   const classes = useStyles();
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.only("xs"));
@@ -60,7 +60,9 @@ export default function Menu(props) {
             <Card className={classes.card} elevation={1}>
               <CardHeader
                 title={pizza.title}
-                subheader={`$${pizza.price.toFixed(2)}`}
+                subheader={`$${pizza.priceUSD.toFixed(
+                  2
+                )} / €${pizza.priceEUR.toFixed(2)}`}
                 action={
                   <IconButton onClick={() => addCartItem(pizza.id)}>
                     <Badge badgeContent={items.get(pizza.id)} color="secondary">

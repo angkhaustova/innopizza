@@ -36,6 +36,7 @@ export default function App(props) {
     setOrderId,
     orderId,
     handlePizzaLoad,
+    exchangeRate,
   } = props;
   const theme = useTheme();
   const classes = useStyles();
@@ -55,6 +56,7 @@ export default function App(props) {
       setOrderId={setOrderId}
       orderId={orderId}
       handlePizzaLoad={handlePizzaLoad}
+      exchangeRate={exchangeRate}
     ></Order>
   );
 
@@ -70,6 +72,7 @@ export default function App(props) {
             setCartItems={setCartItems}
             addCartItem={addCartItem}
             handlePizzaLoad={handlePizzaLoad}
+            exchangeRate={exchangeRate}
           ></Menu>
         </Grid>
         {isSmallScreen ? (
